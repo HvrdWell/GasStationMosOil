@@ -1,0 +1,41 @@
+@startuml
+
+class PositionInReceipt {
+  int Id {get; init;}
+  int Count {get; set;}
+  string? Name {get;}
+  string Price {get;}
+  double TotalCost {get;}
+}
+
+class Receipt {
+  NozzlePostViewModel? RelateNozzlePost
+  List<PositionInReceipt> CommodityItem {readonly}
+  void AddIdToCommodityItem(int id, double quantity)
+  void RemoveIdFromCommodityItem(int id)
+  void ClearCommodityItem()
+  void ChangeCountById(int id, int count)
+  double GetGoodsSummary()
+  string TextGoodsSummary {get;}
+  double GoodsSummary {get;}
+}
+
+class CurrentSession {
+  static Receipt CurrentReceipt {get; set;}
+  static double Revenue {get; set;}
+  static List<Receipt> HistoryOfReceipts {get; set;}
+  static void CreateNewReceipt(double receiptTotal)
+}
+
+class ShoppingCartItem {
+  int Id {get; private init;}
+  int Count {get; private init;}
+  static DataTable Update(Receipt receipt)
+}
+
+PositionInReceipt "1" -- "*" Receipt: CommodityItem
+CurrentSession -- Receipt: CurrentReceipt, HistoryOfReceipts
+CurrentSession -- "*" Receipt: HistoryOfReceipts
+ShoppingCartItem -- Receipt: Update
+
+@enduml

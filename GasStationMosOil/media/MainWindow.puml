@@ -1,0 +1,221 @@
+@startuml
+
+interface IMainWindowViewModel {
+  +int NozzlePostCount
+}
+
+class ConcreteMainWindowViewModel {
+  +int NozzlePostCount
+  -ConfigurationData _configurationData
+  +ConcreteMainWindowViewModel()
+}
+
+interface IConfigurationDataProvider {
+  +int NozzlePostCount
+}
+
+class MainWindowViewModel {
+  +int NozzlePostCount
+  +List<string?> PaymentTypeNames
+  +event PropertyChangedEventHandler PropertyChanged
+  -ConfigurationData _configurationData
+  -NozzlePostViewModel _selectedNozzlePostInstance
+  +MainWindowViewModel()
+  +NozzlePostViewModel? SelectedNozzlePostInstance
+  +void UpdateNozzlePostCount()
+  +string TotalCostText
+  +string FinishPaymentType
+  +ObservableCollection<ShoppingCartItem> ReceiptItems
+  +bool IsPaymentReady
+  +bool IsWindowFree
+}
+
+class ConfigurationData {
+  +int NozzlePostCount
+  +PaymentType[] PaymentTypes
+}
+
+class NozzlePostViewModel {
+  +event EventHandler<NozzlePostViewModel> SelectedIdChanged
+}
+
+class ShoppingCartItem {
+  +string FuelType
+  +decimal Quantity
+  +decimal Cost
+}
+
+class Deserialize {
+  +static ConfigurationData DeserializeConfiguration()
+}
+
+class CurrentSession {
+  +static CurrentSession CurrentReceipt
+}
+
+class Messenger {
+  +static Messenger Default
+  +void Register<T>
+}
+
+class MainWindow {
+  +DateTime _sessionTime
+  +void grid_Loaded(object sender, RoutedEventArgs e)
+  -MainWindowViewModel _viewModel
+  -BlurEffect _blur
+  +MainWindow()
+  +void CreateNozzlePosts(int count)
+  +void _timer_Tick(object? sender, EventArgs e)
+  +void AddGoodsButton_OnClick(object sender, RoutedEventArgs e)
+  +void MainWindow_OnClosed(object? sender, EventArgs e)
+  +void FinishPaymentButton_OnClick(object sender, RoutedEventArgs e)
+  +void FuelInfoButton_OnClick(object sender, RoutedEventArgs e)
+  +void NozzleStateButton_OnClick(object sender, RoutedEventArgs e)
+  +void UserButton_OnClick(object sender, RoutedEventArgs e)
+  +void FuelButton_OnClick(object sender, RoutedEventArgs e)
+  +void PayHistoryButton_OnClick(object sender, RoutedEventArgs e)
+  +void LogoutButton_OnClick(object sender, RoutedEventArgs e)
+}
+
+class NozzlePost {
+  +NozzlePost(int i, NozzlePostViewModel viewModel)
+}
+
+class GoodsSelector {
+  +GoodsSelector
+}
+
+
+class GoodsSelectorViewModel {
+  +GoodsSelectorViewModel
+}
+
+class ConcreteGoodsSelectorViewModel {
+  +ConcreteGoodsSelectorViewModel()
+}
+
+class NozzlePostViewModel {
+  +NozzlePostViewModel(int i, IConfigurationDataProvider dataProvider)
+}
+
+class ConcreteNozzlePostViewModel {
+  +ConcreteNozzlePostViewModel()
+}
+
+class ShoppingCartItem {
+  +static void Update(CurrentSession currentReceipt)
+}
+
+class CurrentSession {
+  +static CurrentSession CurrentReceipt
+}
+
+interface INozzlePostViewModel {
+    {abstract} +DataTable NozzlePostDataTable
+    {abstract} +ObservableCollection<string?> NozzlePostNames
+}
+
+class ConcreteNozzlePostViewModel {
+    +NozzlePostDataTable: DataTable
+}
+
+interface INozzlePostDataProvider {
+    {abstract} +DataTable NozzlePostDataTable
+}
+
+class NozzlePostViewModel {
+    +NozzlePostDataTable: DataTable
+    +NozzlePostNames: ObservableCollection<string?>
+    +Price: double
+    +TextPrice: string
+    +Summary: double
+    +TextSummary: string
+    +LiterCount: double
+    +SelectedFuelId: int
+    +SelectedFuelName: string
+}
+
+class NozzlePostData {
+    +NozzlePostDataTable: DataTable
+}
+
+class NozzlePost {
+    +NozzlePostViewModel: NozzlePostViewModel
+    +InitializeComponent(): void
+    +NozzlePostNumber: ContentControl
+    +FillUpFullTank: ToggleButton
+    +LiterAmount: TextBox
+    +LiterAmountClicked(sender: object, e: RoutedEventArgs): void
+    +LiterAmountTextInput(sender: object, e: TextCompositionEventArgs): void
+    +FillUpFullTank_Click(sender: object, e: RoutedEventArgs): void
+    +SelectionChanged(sender: object, e: SelectionChangedEventArgs): void
+    +LiterAmount_OnTextChanged(sender: object, e: TextChangedEventArgs): void
+}
+
+class PositionInReceipt {
+  int Id {get; init;}
+  int Count {get; set;}
+  string? Name {get;}
+  string Price {get;}
+  double TotalCost {get;}
+}
+
+class Receipt {
+  NozzlePostViewModel? RelateNozzlePost
+  List<PositionInReceipt> CommodityItem {readonly}
+  void AddIdToCommodityItem(int id, double quantity)
+  void RemoveIdFromCommodityItem(int id)
+  void ClearCommodityItem()
+  void ChangeCountById(int id, int count)
+  double GetGoodsSummary()
+  string TextGoodsSummary {get;}
+  double GoodsSummary {get;}
+}
+
+class CurrentSession {
+  static Receipt CurrentReceipt {get; set;}
+  static double Revenue {get; set;}
+  static List<Receipt> HistoryOfReceipts {get; set;}
+  static void CreateNewReceipt(double receiptTotal)
+}
+
+class ShoppingCartItem {
+  int Id {get; private init;}
+  int Count {get; private init;}
+  static DataTable Update(Receipt receipt)
+}
+
+PositionInReceipt "1" -- "*" Receipt: CommodityItem
+CurrentSession -- Receipt: CurrentReceipt, HistoryOfReceipts
+CurrentSession -- "*" Receipt: HistoryOfReceipts
+ShoppingCartItem -- Receipt: Update
+
+INozzlePostViewModel <|-- ConcreteNozzlePostViewModel
+INozzlePostDataProvider <|-- ConcreteNozzlePostViewModel
+INozzlePostViewModel <|-- NozzlePostViewModel
+INozzlePostDataProvider <|-- NozzlePostViewModel
+ConcreteNozzlePostViewModel -- NozzlePostData
+NozzlePost -- NozzlePostData
+NozzlePost -- NozzlePostViewModel
+MainWindow --> MainWindowViewModel
+MainWindow --> NozzlePost
+MainWindow --> GoodsSelector
+MainWindow --> GoodsSelectorViewModel
+GoodsSelectorViewModel --> ConcreteGoodsSelectorViewModel
+NozzlePost --> NozzlePostViewModel
+NozzlePostViewModel --> ConcreteNozzlePostViewModel
+MainWindow --> ShoppingCartItem
+ShoppingCartItem --> CurrentSession
+
+IMainWindowViewModel <|-- ConcreteMainWindowViewModel
+IConfigurationDataProvider <|-- ConcreteMainWindowViewModel
+IMainWindowViewModel <|-- MainWindowViewModel
+IConfigurationDataProvider <|-- MainWindowViewModel
+MainWindowViewModel --> ConfigurationData
+MainWindowViewModel --> NozzlePostViewModel
+MainWindowViewModel --> ShoppingCartItem
+MainWindowViewModel --> Deserialize
+MainWindowViewModel --> CurrentSession
+MainWindowViewModel --> Messenger
+
+@enduml

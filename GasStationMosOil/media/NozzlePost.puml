@@ -1,0 +1,55 @@
+@startuml
+
+interface INozzlePostViewModel {
+    {abstract} +DataTable NozzlePostDataTable
+    {abstract} +ObservableCollection<string?> NozzlePostNames
+}
+
+class ConcreteNozzlePostViewModel {
+    +NozzlePostDataTable: DataTable
+}
+
+interface INozzlePostDataProvider {
+    {abstract} +DataTable NozzlePostDataTable
+}
+
+class NozzlePostViewModel {
+    +NozzlePostDataTable: DataTable
+    +NozzlePostNames: ObservableCollection<string?>
+    +Price: double
+    +TextPrice: string
+    +Summary: double
+    +TextSummary: string
+    +LiterCount: double
+    +SelectedFuelId: int
+    +SelectedFuelName: string
+}
+
+class NozzlePostData {
+    +NozzlePostDataTable: DataTable
+}
+
+class NozzlePost {
+    +NozzlePostViewModel: NozzlePostViewModel
+    +InitializeComponent(): void
+    +NozzlePostNumber: ContentControl
+    +FillUpFullTank: ToggleButton
+    +LiterAmount: TextBox
+    +LiterAmountClicked(sender: object, e: RoutedEventArgs): void
+    +LiterAmountTextInput(sender: object, e: TextCompositionEventArgs): void
+    +FillUpFullTank_Click(sender: object, e: RoutedEventArgs): void
+    +SelectionChanged(sender: object, e: SelectionChangedEventArgs): void
+    +LiterAmount_OnTextChanged(sender: object, e: TextChangedEventArgs): void
+}
+
+INozzlePostViewModel <|-- ConcreteNozzlePostViewModel
+INozzlePostDataProvider <|-- ConcreteNozzlePostViewModel
+INozzlePostViewModel <|-- NozzlePostViewModel
+INozzlePostDataProvider <|-- NozzlePostViewModel
+ConcreteNozzlePostViewModel -- NozzlePostData
+NozzlePost -- NozzlePostData
+NozzlePost -- NozzlePostViewModel
+
+
+
+@enduml

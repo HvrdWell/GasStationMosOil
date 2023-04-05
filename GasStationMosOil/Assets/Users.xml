@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Users>
+    <User>
+        <Login>1</Login>
+        <Password>1</Password>
+        <FullName>Никита Никита Никита</FullName>
+        <AccessLevel>admin</AccessLevel>
+    </User>
+    <User>
+        <Login>Валентин</Login>
+        <Password>1234</Password>
+        <FullName>Серпухов Валентин Профанович</FullName>
+        <AccessLevel>user</AccessLevel>
+    </User>
+    <User>
+        <Login>Анна Степановна</Login>
+        <Password>123</Password>
+        <FullName>Степановна Анна Степановна</FullName>
+        <AccessLevel>user</AccessLevel>
+    </User>
+    <User>
+        <Login>Yavez</Login>
+        <Password>123</Password>
+        <FullName>Жиевирак Явез</FullName>
+        <AccessLevel>admin</AccessLevel>
+    </User>
+</Users>

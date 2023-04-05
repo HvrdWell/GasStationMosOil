@@ -1,0 +1,71 @@
+<Window x:Class="GasolineMosOil.View.ShiftInfo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:view="clr-namespace:GasolineMosOil.View"
+        mc:Ignorable="d"
+        Title="Смена" Height="540" Width="740" ResizeMode="NoResize" AllowsTransparency="True" WindowStyle="None"
+        Background="#00000000"
+        WindowStartupLocation="CenterOwner" ShowInTaskbar="False" FontFamily="Bahnschrift">
+
+    <Grid Margin="20">
+        <Grid.Effect>
+            <DropShadowEffect BlurRadius="25" Direction="-90"
+                              RenderingBias="Quality" ShadowDepth="2" />
+        </Grid.Effect>
+        <view:CustomChromaTemplate />
+        <Grid Margin="0, 2, 0, 0">
+            <Popup x:Name="EndShiftPopup" IsOpen="False" StaysOpen="False" AllowsTransparency="True"
+                   PopupAnimation="Fade" Placement="Mouse">
+                <Grid Margin="20">
+                    <Border Background="#FF81C784" Padding="10" CornerRadius="10">
+                        <Border.Effect>
+                            <DropShadowEffect Color="black" ShadowDepth="2" BlurRadius="15" />
+                        </Border.Effect>
+                        <StackPanel>
+                            <TextBlock Text="Вы уверены?"
+                                       FontSize="24" Foreground="#FF388E3C" />
+                            <Button x:Name="SureEndShiftButton" Content="Закрыть смену" Click="SureEndShift_Click"
+                                    Padding="12, 5, 12, 5" Foreground="#FFA5D6A7"
+                                    Background="#FF43A047" BorderThickness="0" FontSize="18" />
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Popup>
+            <Label Content="Смена" VerticalAlignment="Top" Focusable="False" HorizontalContentAlignment="Center"
+                   Padding="0,0,0,0"
+                   Grid.IsSharedSizeScope="True" Background="{x:Null}" Foreground="#FFE8F5E9" FontSize="24"
+                   HorizontalAlignment="Center" />
+            <StackPanel Margin="30, 60, 30, 30">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Text="ВЫРУЧКА ЗА СМЕНУ:" TextAlignment="Left" Height="38" VerticalAlignment="Bottom"
+                               FontSize="30" HorizontalAlignment="Left"
+                               Foreground="#FF1B5E20" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                               ScrollViewer.VerticalScrollBarVisibility="Auto" Padding="0"
+                               FontStretch="SemiCondensed" />
+                    <TextBlock Name="Revenue" TextAlignment="Left" Height="38" VerticalAlignment="Bottom"
+                               FontSize="30" HorizontalAlignment="Left" Margin="10,0,0,0"
+                               Foreground="#FF1B5E20" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                               ScrollViewer.VerticalScrollBarVisibility="Auto" Padding="0"
+                               FontStretch="SemiCondensed" />
+                </StackPanel>
+                <ScrollViewer VerticalScrollBarVisibility="Visible" Height="280" HorizontalScrollBarVisibility="Auto">
+                    <TextBlock x:Name="HistoryReceiptsInfo" HorizontalAlignment="Center" Margin="0,30,0,0"
+                               Foreground="#FF1B5E20" Background="#FFC8E6C9" Width="600"
+                               VerticalAlignment="Top" FontSize="18"
+                               Focusable="False" />
+                </ScrollViewer>
+                <DockPanel LastChildFill="True" Margin="20,20,20,0">
+                    <Button x:Name="EndShiftButton" Content="Закрыть смену" Click="EndShift_Click"
+                            Padding="12, 5, 12, 5" Foreground="#FFA5D6A7"
+                            Background="#FF43A047" BorderThickness="0" FontSize="18" />
+                    <Button x:Name="ContinueShift" Content="Вернуться к работе" Click="ContinueShift_Click"
+                            Margin="12,0,0,0" Background="#FFA5D6A7"
+                            BorderBrush="#FF388E3C" Foreground="#FF1B5E20" BorderThickness="0" FontSize="18"
+                            Padding="12, 5, 12, 5" />
+                </DockPanel>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,226 @@
+﻿<UserControl x:Class="GasStationMosOil.Pages.ReferencesAdminControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GasStationMosOil.Pages"
+             mc:Ignorable="d" 
+             d:DesignHeight="920" d:DesignWidth="1420"
+                
+             Loaded="UserControl_Loaded">
+    
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="180"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Vertical"
+                    Grid.Row="0" Margin="862,238,134,226">
+            <TextBlock x:Name="txtBlockNameRef"
+                           TextWrapping="Wrap"
+                           Visibility="Collapsed"
+                           Text="Название"
+                           FontSize="35"
+                           Margin="0 10 0 10"
+                           FontFamily="Roboto" Width="340"/>
+            <TextBox x:Name="txtBoxNameRef"
+                         Height="45"
+                         MaxLength="20"
+                         Visibility="Collapsed"
+                         Width="330"
+                         />
+            <TextBox x:Name="txtBoxCount"
+                         Height="45"
+                         MaxLength="20"
+                         Visibility="Collapsed"
+                         Width="330"
+                         />
+            <Button x:Name="btnAcceptChanges"
+                        Click="btnAcceptChanges_Click"
+                        Content="Изменить"  
+                        Visibility="Collapsed"
+                        FontSize="35"
+                        FontFamily="Roboto"
+                        Cursor="Hand"
+                        HorizontalAlignment="Center"
+                        BorderThickness="0"
+                        Foreground="White" Height="94" Width="320">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="Black"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Height="60" Width="310"
+                                                    CornerRadius="30"
+                                                    Background="{TemplateBinding Background}" Margin="0,0,0,-16">
+                                        <ContentPresenter VerticalAlignment="Center"
+                                                                      HorizontalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="LightGray"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button x:Name="btnMakeNew"
+                        Click="btnMakeNew_Click"
+                        Content="Создать"  
+                        Visibility="Collapsed"
+                        FontSize="35"
+                        FontFamily="Roboto"
+                        Cursor="Hand"
+                        HorizontalAlignment="Center"
+                        BorderThickness="0"
+                        Foreground="White" Height="94" Width="320">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="Black"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Height="60" Width="310"
+                                                    CornerRadius="30"
+                                                    Background="{TemplateBinding Background}" Margin="0,0,0,-16">
+                                        <ContentPresenter VerticalAlignment="Center"
+                                                                      HorizontalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="LightGray"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <StackPanel Orientation="Horizontal"
+                            Margin="60 0 0 0">
+
+                <StackPanel Orientation="Vertical"
+                            Margin="70 0 0 0">
+                    <TextBlock TextWrapping="Wrap"
+                           Text="Справочники"
+                           FontSize="35"
+                               Margin="0 10 0 10"
+                           FontFamily="Roboto"/>
+
+                    <ComboBox x:Name="comBoxReferences"
+                           Height="45"
+                           Width="330"
+                           HorizontalAlignment="Left"
+                           >
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel Orientation="Vertical"
+                            Margin="220 0 0 20" Height="176" Width="592">
+                    <Button x:Name="btnAddNew"
+                        Click="btnAddNew_Click"
+                            Content="Создать новую запись"
+                            FontSize="35"
+                            FontFamily="Roboto"
+                            Cursor="Hand"
+                            IsEnabled="False"
+                            HorizontalAlignment="Right"
+                            
+                            BorderThickness="0"
+                             Background="#FFC8E6C9" BorderBrush="#FFA5D6A7" Foreground="#FF1B5E20" Height="94">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Background" Value="Black"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border Height="60" Width="400"
+                                                    CornerRadius="30"
+                                                    Background="{TemplateBinding Background}">
+                                                <ContentPresenter VerticalAlignment="Center"
+                                                                      HorizontalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="LightGray"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button x:Name="btnSearch"
+                        Click="btnSearch_Click"
+                            Content="Применить"                            
+                            FontSize="35"
+                            FontFamily="Roboto"
+                            HorizontalAlignment="Right"
+                            Cursor="Hand"
+                            BorderThickness="0"
+                             Background="#FFC8E6C9" BorderBrush="#FFA5D6A7" Foreground="#FF1B5E20" Height="66">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Background" Value="Black"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border Height="60" Width="200"
+                                                    CornerRadius="30"
+                                                    Background="{TemplateBinding Background}">
+                                                <ContentPresenter VerticalAlignment="Center"
+                                                                      HorizontalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="LightGray"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </StackPanel>
+
+            </StackPanel>
+        </Grid>
+        <Border Grid.Row="0"
+                Background="White"
+                Padding="10" Margin="0,0,810,0">
+            <DataGrid  
+                        CanUserAddRows="False" CanUserDeleteRows="true" AutoGenerateColumns="False"
+                      x:Name="dataGridViewReferences"
+                      ColumnWidth="*"
+                      Background="White">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding id}" Header="#" Width="auto" IsReadOnly="True"  CanUserResize="False"/>
+                    <DataGridTextColumn x:Name="TextColumnName"  Binding="{Binding name}"  Header="Название"  Width="auto" IsReadOnly="True"  CanUserResize="False"/>
+                    <DataGridTextColumn x:Name="TextColumnScores" Visibility="Collapsed"  Binding="{Binding scores}"  Header="Баллы"  Width="auto" IsReadOnly="True"  CanUserResize="False"/>
+                    <DataGridTemplateColumn Header="Действие" IsReadOnly="True" CanUserResize="False" Width="auto">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="btnChangeReferences"
+                                        Width="50"
+                                        Height="50"
+                                        Click="btnChangeReferences_Click"
+                                        >
+                                    <icon:PackIconMaterial Kind="Pencil" />
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+    </Grid>
+</UserControl>

@@ -1,0 +1,99 @@
+﻿<Window x:Class="GasStationMosOil.View.ChangeTanks"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GasStationMosOil.View"
+        mc:Ignorable="d"
+        Title="Конфигурация резервуаров" Height="540" Width="840" ResizeMode="NoResize" AllowsTransparency="True"
+        WindowStyle="None" 
+        WindowStartupLocation="CenterOwner" ShowInTaskbar="False" FontFamily="Bahnschrift" Background="{x:Null}">
+    <Grid Margin="20">
+
+        <Grid.Effect>
+            <DropShadowEffect BlurRadius="25" Direction="-90"
+                              RenderingBias="Quality" ShadowDepth="2" />
+        </Grid.Effect>
+
+        <Grid>
+            <Rectangle  Fill="#FF81C784" RadiusX="20" RadiusY="20" StrokeThickness="6" Stroke="#FF43A047" MinWidth="600">
+                <Rectangle.Effect>
+                    <DropShadowEffect BlurRadius="25" Direction="-90"
+                                  RenderingBias="Quality" ShadowDepth="2" />
+                </Rectangle.Effect>
+            </Rectangle>
+            <Label Content="Конфигурация топливо" VerticalAlignment="Top" Focusable="False"
+                   HorizontalContentAlignment="Center"
+                   Padding="0,0,0,0"
+                   Grid.IsSharedSizeScope="True" Background="{x:Null}" Foreground="#FF1B5E20" FontSize="24"
+                   HorizontalAlignment="Center" Margin="0,10,0,0" />
+            <DataGrid RowHeaderWidth="0" x:Name="TanksConfigurationGrid" AutoGenerateColumns="False"
+                      CanUserAddRows="False" CanUserDeleteRows="true"
+                      CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False"
+                      CanUserSortColumns="False" Margin="80,50,80,100" Background="#FFC8E6C9"
+                      BorderBrush="#FF66BB6A" Foreground="#FF1B5E20" BorderThickness="0,0,0,0"
+                      FontSize="16" FontFamily="Bahnschrift" HorizontalAlignment="Center"
+                      PreviewMouseRightButtonDown="DataGrid_PreviewMouseRightButtonDown"
+                      VerticalAlignment="Bottom" Width="{Binding Path=ActualWidth}" Height="340">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header=" Номер  " Binding="{Binding idTypeFuel}" MaxWidth="200"  />
+                    <DataGridTextColumn Header=" Название " Binding="{Binding nameTypeFuel}" MaxWidth="200" />
+                    <DataGridTextColumn Header=" Стоимость " Binding="{Binding price}" MaxWidth="200" />
+                    <DataGridTextColumn Header=" Остаток " Binding="{Binding count}" MaxWidth="200" />
+                    <DataGridTemplateColumn Header="Действие" IsReadOnly="True" CanUserResize="False" Width="auto">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="btnChangeUser"
+                                        Width="25"
+                                        Height="25"
+                                        Click="btnChangeUser_Click"
+                                        Content="Изменить">
+
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+
+                <DataGrid.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="10" />
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                        <Setter Property="Background" Value="#A5D6A7" />
+                        <Setter Property="Foreground" Value="#FF1B5E20" />
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+                <DataGrid.CellStyle>
+                    <Style TargetType="{x:Type DataGridCell}">
+                        <Setter Property="Background" Value="#C8E6C9" />
+                        <Setter Property="BorderBrush" Value="#C8E6C9" />
+                        <Setter Property="Foreground" Value="#FF1B5E20" />
+                    </Style>
+                </DataGrid.CellStyle>
+
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem x:Name="DeleteRowMenuItem" Header="Удалить продукт" Click="DeleteRowMenuItem_Click" />
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+
+                <DataGrid.RowStyle>
+                    <Style TargetType="{x:Type DataGridRow}">
+                        <Setter Property="Background" Value="#C8E6C9" />
+                        <Setter Property="BorderBrush" Value="#C8E6C9" />
+                        <Setter Property="Foreground" Value="#FF1B5E20" />
+                    </Style>
+                </DataGrid.RowStyle>
+            </DataGrid>
+            <DockPanel LastChildFill="True" Margin="50,452,50,10">
+
+                <Button x:Name="CancelChangesButtonTanks" Content="Завершить конфигурацию" 
+                        Margin="10,0,0,0" Background="#FFA5D6A7"
+                        BorderBrush="#FF388E3C" Foreground="#FF1B5E20" BorderThickness="0" FontSize="18" Click="CancelChangesButtonTanks_Click"  />
+            </DockPanel>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,167 @@
+<UserControl x:Class="GasolineMosOil.View.NozzlePost"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:view="clr-namespace:GasolineMosOil.View"
+             mc:Ignorable="d"
+             FontFamily="Bahnschrift" FontSize="18"
+             d:DesignHeight="250" d:DesignWidth="260">
+
+    <UserControl.Resources>
+        <view:ProgressToEndPointConverter x:Key="ProgressToEndPointConverter" />
+        <view:ProgressToNumberGradientFillingConverter x:Key="ProgressToNumberConverter" />
+        <view:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+    </UserControl.Resources>
+    <Grid x:Name="NozzlePanel" Height="230" Width="240" Margin="10,10,10,10"
+          IsHitTestVisible="{Binding IsNozzlePostBusy, Converter={StaticResource InverseBooleanConverter}}">
+        <Popup x:Name="MessagePopup" IsOpen="False" StaysOpen="False" AllowsTransparency="True" PopupAnimation="Fade">
+            <Grid Margin="20, 0, 20, 20">
+                <Border Background="#FF81C784" Padding="10" CornerRadius="10">
+                    <Border.Effect>
+                        <DropShadowEffect Color="black" ShadowDepth="1" BlurRadius="19" />
+                    </Border.Effect>
+                    <TextBlock Text="Ошибка: Вы пытаетесь добавить топлива больше,&#10;чем имеется в резервуарах"
+                               Foreground="#FF388E3C" />
+                </Border>
+            </Grid>
+        </Popup>
+        <Rectangle Fill="#FF88C98B" RadiusX="8" RadiusY="8" StrokeThickness="3" />
+        <Image Source="/media/gas_station.png" Stretch="Fill" HorizontalAlignment="Right"
+               VerticalAlignment="Top" Margin="0,10,10,0" Width="50" Height="50" />
+        <ComboBox x:Name="NozzleComboBox" Height="40" SelectedIndex="0" FontSize="30"
+                  VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="160"
+                  Margin="70,0,0,120" Foreground="#FF1B5E20"
+                  ItemsSource="{Binding NozzlePostDataTable}"
+                  DisplayMemberPath="Name" SelectionChanged="SelectionChanged" />
+
+        <Label x:Name="PriceForLiter" Content="{Binding Path=TextPrice}" ContentStringFormat="Литр за&#10;{0}"
+               Height="75"
+               VerticalAlignment="Top" Width="117" FontSize="22" HorizontalAlignment="Left"
+               Foreground="#FF1B5E20" VerticalContentAlignment="Center"
+               ScrollViewer.HorizontalScrollBarVisibility="Auto"
+               ScrollViewer.VerticalScrollBarVisibility="Auto" FontWeight="Light"
+               FontStretch="SemiExpanded" Padding="5,0,0,0" Margin="70,0,0,0" />
+
+        <TextBox x:Name="LiterAmount" HorizontalAlignment="Right" Height="30"
+                 Margin="0,122,10,0" Width="80"
+                 Foreground="#FF1B5E20" Background="#FFC8E6C9" BorderBrush="#FFA5D6A7"
+                 SelectionBrush="#FF2E7D32" SelectionTextBrush="#FFC8E6C9" VerticalAlignment="Top"
+                 FontSize="22" TextWrapping="WrapWithOverflow" HorizontalContentAlignment="Center"
+                 VerticalContentAlignment="Stretch" VerticalScrollBarVisibility="Disabled"
+                 GotFocus="LiterAmountClicked" PreviewTextInput="LiterAmountTextInput"
+                 TextChanged="LiterAmount_OnTextChanged"
+                 BorderThickness="3,3,3,3" MaxLength="4" Text="{Binding Path=LiterCount, Mode=TwoWay}" />
+
+        <Label Content="Литры:" Height="34" VerticalAlignment="Top" Width="77"
+               FontSize="24" HorizontalAlignment="Left" Margin="70,120,0,0"
+               Foreground="#FF1B5E20" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+               ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Center"
+               VerticalContentAlignment="Center" Padding="0" />
+
+        <Path Data="M240.18433,162.65637 L72.960022,162.65637" HorizontalAlignment="Left"
+              Height="1" Margin="70,0,0,34" Stroke="#FF1B5E20" Stretch="Fill"
+              VerticalAlignment="Bottom" Width="160" />
+
+        <Label Content="Рубли:" Height="34" VerticalAlignment="Top" Width="77"
+               FontSize="24" HorizontalAlignment="Left" Margin="70,192,0,0"
+               Foreground="#FF1B5E20" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+               ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Center"
+               VerticalContentAlignment="Center" Padding="0" />
+
+        <TextBox x:Name="PriceAmount" HorizontalAlignment="Right" Height="30"
+                 Margin="0,196,10,0" Width="80"
+                 Foreground="#FF1B5E20" Background="#FFC8E6C9" BorderBrush="#FFA5D6A7"
+                 SelectionBrush="#FF2E7D32" SelectionTextBrush="#FFC8E6C9" VerticalAlignment="Top"
+                 FontSize="22" TextWrapping="WrapWithOverflow" HorizontalContentAlignment="Center"
+                 VerticalContentAlignment="Stretch" VerticalScrollBarVisibility="Disabled"
+                 GotFocus="PriceAmountClicked" PreviewTextInput="PriceAmountTextInput"
+                 Text="{Binding Path=Summary, Mode=TwoWay}"
+                 BorderThickness="3,3,3,3" MaxLength="4" />
+
+        <Label x:Name="LabelPrice"  ContentStringFormat="Сумма: {0}"
+               Height="34"
+               VerticalAlignment="Bottom"
+               Width="80" FontSize="18" HorizontalAlignment="Left" Margin="70,0,0,0"
+               Foreground="#FF1B5E20" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+               ScrollViewer.VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Center"
+               Padding="0" />
+
+        <Grid x:Name="FuelGrades" Width="60" HorizontalAlignment="Left">
+            <Rectangle RadiusX="8" RadiusY="8" StrokeThickness="3">
+                <Rectangle.Fill>
+                    <LinearGradientBrush
+                        EndPoint="{Binding Progress, Converter={StaticResource ProgressToEndPointConverter}}"
+                        StartPoint="0.5, 0">
+                        <GradientStop Color="#FF4CAF50" Offset="1" />
+                        <GradientStop Color="#FF1B5E20" Offset="1" />
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+            <Label x:Name="NozzleCompletionPercentage" Height="48" Content="{Binding Path=ProgressInPercent}"
+                   ContentStringFormat=" {0}%"
+                   VerticalAlignment="Bottom" Width="50" FontSize="24" HorizontalAlignment="Center"
+                   Foreground="#FF2E7D32" HorizontalContentAlignment="Center"
+                   VerticalContentAlignment="Center" Padding="0"
+                   Grid.IsSharedSizeScope="True" />
+            <Label x:Name="NozzlePostNumber" VerticalAlignment="Bottom" FontSize="50"
+                   Padding="0" VerticalContentAlignment="Center" Content="1"
+                   HorizontalContentAlignment="Center" Margin="0,0,0,155" >
+                <Label.Foreground>
+                    <LinearGradientBrush
+                        EndPoint="{Binding Progress, Converter={StaticResource ProgressToNumberConverter}}"
+                        StartPoint="0.5, 0">
+                        <GradientStop Color="#FF1B5E20" Offset="1" />
+                        <GradientStop Color="#FF4CAF50" Offset="1" />
+                    </LinearGradientBrush>
+                </Label.Foreground>
+            </Label>
+        </Grid>
+
+        <ToggleButton x:Name="FillUpFullTank" Content="до полного бака" HorizontalAlignment="Left"
+                      Height="30" Margin="70,160,0,0" VerticalAlignment="Top" Width="160"
+                      BorderThickness="0" IsChecked="{Binding IsButtonOn}"
+                      Click="FillUpFullTank_Click">
+            <ToggleButton.Style>
+                <Style TargetType="ToggleButton">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ToggleButton">
+                                <Border x:Name="border">
+                                    <ContentPresenter x:Name="contentPresenter" Content="{TemplateBinding Content}">
+                                        <ContentPresenter.ContentTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding}"
+                                                           Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ToggleButton}}" />
+                                            </DataTemplate>
+                                        </ContentPresenter.ContentTemplate>
+                                    </ContentPresenter>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsChecked" Value="True">
+                                        <Setter TargetName="border" Property="Background" Value="#FF388E3C" />
+                                        <Setter Property="Foreground" Value="#FF81C784" />
+                                        <Setter TargetName="border" Property="CornerRadius" Value="5" />
+                                        <Setter TargetName="contentPresenter" Property="VerticalAlignment"
+                                                Value="Center" />
+                                        <Setter TargetName="contentPresenter" Property="HorizontalAlignment"
+                                                Value="Center" />
+                                    </Trigger>
+                                    <Trigger Property="IsChecked" Value="False">
+                                        <Setter TargetName="border" Property="CornerRadius" Value="5" />
+                                        <Setter TargetName="border" Property="Background" Value="#FF81C784" />
+                                        <Setter Property="Foreground" Value="#FF388E3C" />
+                                        <Setter TargetName="contentPresenter" Property="VerticalAlignment"
+                                                Value="Center" />
+                                        <Setter TargetName="contentPresenter" Property="HorizontalAlignment"
+                                                Value="Center" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ToggleButton.Style>
+        </ToggleButton>
+    </Grid>
+</UserControl>

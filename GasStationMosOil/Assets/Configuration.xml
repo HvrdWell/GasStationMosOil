@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Configuration>
+    <NozzlePostCount>4</NozzlePostCount>
+    <PaymentTypes>
+        <PaymentType>
+            <Name>Пластиковая карта</Name>
+            <IsActive>true</IsActive>
+            <IsCash>false</IsCash>
+        </PaymentType>
+        <PaymentType>
+            <Name>Наличные</Name>
+            <IsActive>true</IsActive>
+            <IsCash>true</IsCash>
+        </PaymentType>
+    </PaymentTypes>
+</Configuration>

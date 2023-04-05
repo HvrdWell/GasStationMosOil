@@ -1,0 +1,432 @@
+﻿<Window
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=Microsoft.Win32.Primitives"
+    xmlns:view="clr-namespace:GasolineMosOil.View"
+    x:Name="_MainWindow"
+    x:Class="GasolineMosOil.View.MainWindow"
+    Closed="MainWindow_OnClosed"
+    mc:Ignorable="d"
+    Title="АРМ оператора АЗС"
+    FontFamily="Bahnschrift" FontSize="18"
+    SizeToContent="Manual" MinWidth="1320"  MinHeight="760"
+    HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+    Width="1320" Height="760" ResizeMode="CanResizeWithGrip"
+    WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <view:FinishPaymentConverter x:Key="FinishPaymentConverter" />
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FF4B8F4D" />
+            <GradientStop Color="#FF508352" Offset="1" />
+            <GradientStop Color="#FFB5CFB6" Offset="0.5" />
+        </LinearGradientBrush>
+    </Window.Background>
+    <Grid x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="37*" />
+            <ColumnDefinition Width="18*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel x:Name="Footer" HorizontalAlignment="Center" Height="50" VerticalAlignment="Bottom"
+                    Orientation="Horizontal" Grid.Row="1" Width="1260" Grid.ColumnSpan="2">
+            <Grid x:Name="roleOfUser" Height="30" Width="200" HorizontalAlignment="Left" VerticalAlignment="Top"
+                  Margin="10,10,10,10">
+                <Rectangle Fill="#FF1B5E20" RadiusX="10" RadiusY="10">
+                    <Rectangle.DataContext>
+                        <ComponentModel:Win32Exception />
+                    </Rectangle.DataContext>
+
+                </Rectangle>
+                <TextBlock Name="roleOfUserTextBlock" Foreground="#FFE8F5E9" HorizontalAlignment="Center" Padding="0,5,0,0" />
+            </Grid>
+            <Grid x:Name="NameSurnameSecondName" Height="30" Width="400" Margin="10,10,0,0" HorizontalAlignment="Left"
+                  VerticalAlignment="Top">
+                <Rectangle Fill="#FF1B5E20" RadiusX="10" RadiusY="10">
+                    <Rectangle.DataContext>
+                        <ComponentModel:Win32Exception />
+                    </Rectangle.DataContext>
+
+                </Rectangle>
+                <Label Name="UserNameLabel" Content="{Binding UserLoginName}" Foreground="#FFE8F5E9" HorizontalAlignment="Center"
+                       Margin="10,0,0,0" />
+            </Grid>
+            <Grid x:Name="ShiftPersonFoot" Height="30" Width="200" HorizontalAlignment="Left" VerticalAlignment="Top"
+                  Margin="10,10,10,10">
+                <Rectangle Fill="#FF1B5E20" RadiusX="10" RadiusY="10">
+                    <Rectangle.DataContext>
+                        <ComponentModel:Win32Exception />
+                    </Rectangle.DataContext>
+
+                </Rectangle>
+                <TextBlock Name="ShiftTime" Foreground="#FFE8F5E9" HorizontalAlignment="Center" Padding="0,5,0,0" />
+            </Grid>
+            <Grid x:Name="CurrDateFoot" Height="30" Width="200">
+                <Rectangle Fill="#FF1B5E20" RadiusX="10" RadiusY="10">
+                    <Rectangle.DataContext>
+                        <ComponentModel:Win32Exception />
+                    </Rectangle.DataContext>
+
+                </Rectangle>
+                <TextBlock Name="DateTimeFoot" Foreground="#FFE8F5E9" HorizontalAlignment="Center" Padding="0,5,0,0" />
+            </Grid>
+            <Grid x:Name="CurrTimeFoot" Height="30" Width="110" HorizontalAlignment="Left" VerticalAlignment="Top"
+                  Margin="10,10,0,0">
+                <Rectangle Fill="#FF1B5E20" RadiusX="10" RadiusY="10">
+                    <Rectangle.DataContext>
+                        <ComponentModel:Win32Exception />
+                    </Rectangle.DataContext>
+
+                </Rectangle>
+                <TextBlock Name="CurrentTime" Foreground="#FFE8F5E9" HorizontalAlignment="Center" Padding="0,5,0,0" />
+            </Grid>
+            <Grid x:Name="LangFoot" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,10,10,0"
+                  Width="40">
+                <Rectangle Height="30" VerticalAlignment="Top" Width="40" Fill="#FFC8E6C9" RadiusX="10" RadiusY="10"
+                           StrokeThickness="0">
+                    <Rectangle.DataContext>
+                        <ComponentModel:Win32Exception />
+                    </Rectangle.DataContext>
+                </Rectangle>
+                <Label Content="RU" Foreground="#FF1B5E20" HorizontalAlignment="Center" />
+            </Grid>
+            <Rectangle Fill="#FF6B70C7" RadiusX="10" RadiusY="10" StrokeThickness="0">
+                <Rectangle.DataContext>
+                    <ComponentModel:Win32Exception />
+                </Rectangle.DataContext>
+
+            </Rectangle>
+        </StackPanel>
+        <Viewbox Grid.Row="0" Grid.Column="0" x:Name="MainBox" MaxHeight="1645" MaxWidth="1645" Margin="10,10,10,10">
+            <Canvas x:Name="MainMenuCenter" Width="800" Height="600" Margin="10,10,10,10"
+                    IsHitTestVisible="{Binding IsWindowFree}">
+                <Rectangle RadiusX="10" RadiusY="10" Fill="#FF1B5E20" MinWidth="800" MinHeight="600" />
+                <Grid Height="60" Width="760" Canvas.Left="20" Canvas.Top="19">
+                    <Rectangle Width="760" Fill="#FF81C784" RadiusX="10" RadiusY="10" />
+
+                    <Popup x:Name="ReservesUserOnlyPopup" IsOpen="False" StaysOpen="False" AllowsTransparency="True"
+                           PopupAnimation="Fade" Placement="Mouse">
+                        <Grid Margin="20">
+                            <Border Background="#FF81C784" Padding="10" CornerRadius="10">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="black" ShadowDepth="2" BlurRadius="15" />
+                                </Border.Effect>
+                                <StackPanel>
+                                    <TextBlock Text="Информация о резервуарах"
+                                               FontSize="22" Foreground="#FF388E3C" />
+                                    <DataGrid RowHeaderWidth="0" x:Name="TanksReservesInfo" AutoGenerateColumns="False"
+                                              CanUserAddRows="True" CanUserDeleteRows="True"
+                                              CanUserReorderColumns="False" CanUserResizeColumns="False"
+                                              CanUserResizeRows="False"
+                                              CanUserSortColumns="False" Margin="10,5,10,10" Background="#FFC8E6C9"
+                                              IsReadOnly="True"
+                                              BorderBrush="#FF66BB6A" Foreground="#FF1B5E20" BorderThickness="0,0,0,0"
+                                              FontSize="16" FontFamily="Bahnschrift" HorizontalAlignment="Center"
+                                              ItemsSource="{Binding TanksReservesInfo}"
+                                              VerticalAlignment="Bottom" Width="{Binding Path=ActualWidth}"
+                                              Height="200">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header=" Название " Binding="{Binding id}"
+                                                                MaxWidth="150" />
+                                            <DataGridTextColumn Header=" Название " Binding="{Binding name}"
+                                                                MaxWidth="150" />
+                                            <DataGridTextColumn Header=" Литры в хран " Binding="{Binding count}"
+                                                                MaxWidth="150" />
+                                            <DataGridTextColumn Header=" Стоимость " Binding="{Binding price}"
+                                                                MaxWidth="100" />
+                                        </DataGrid.Columns>
+
+                                        <DataGrid.Resources>
+                                            <Style TargetType="Border">
+                                                <Setter Property="CornerRadius" Value="10" />
+                                            </Style>
+                                        </DataGrid.Resources>
+                                        <DataGrid.ColumnHeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="Background" Value="#A5D6A7" />
+                                                <Setter Property="Foreground" Value="#FF1B5E20" />
+                                            </Style>
+                                        </DataGrid.ColumnHeaderStyle>
+                                        <DataGrid.CellStyle>
+                                            <Style TargetType="{x:Type DataGridCell}">
+                                                <Setter Property="Background" Value="#C8E6C9" />
+                                                <Setter Property="BorderBrush" Value="#C8E6C9" />
+                                                <Setter Property="Foreground" Value="#FF1B5E20" />
+                                            </Style>
+                                        </DataGrid.CellStyle>
+                                        <DataGrid.RowStyle>
+                                            <Style TargetType="{x:Type DataGridRow}">
+                                                <Setter Property="Background" Value="#C8E6C9" />
+                                                <Setter Property="BorderBrush" Value="#C8E6C9" />
+                                                <Setter Property="Foreground" Value="#FF1B5E20" />
+                                            </Style>
+                                        </DataGrid.RowStyle>
+                                    </DataGrid>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </Popup>
+
+                    <Popup x:Name="AccessDeniedPopup" IsOpen="False" StaysOpen="False" AllowsTransparency="True"
+                           PopupAnimation="Fade" Placement="Mouse">
+                        <Grid Margin="20">
+                            <Border Background="#FF81C784" Padding="10" CornerRadius="10">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="black" ShadowDepth="2" BlurRadius="15" />
+                                </Border.Effect>
+                                <TextBlock Text="Доступ к данной конфигурации имеет лишь управляющий"
+                                           FontSize="20" Foreground="#FF388E3C" />
+                            </Border>
+                        </Grid>
+                    </Popup>
+                    <StackPanel x:Name="FunctionalList" Orientation="Horizontal" >
+                        <Button x:Name="SystemButton" Content="Система" Height="40" Width="177.5" Margin="10,10,5,10"
+                                Background="#FFC8E6C9" BorderBrush="#FFA5D6A7" Foreground="#FF1B5E20"
+                                BorderThickness="3,3,3,3" Click="SystemButton_OnClick" />
+
+                        <Button x:Name="FuelInfoButton" Content="Резервуары" Height="40" Width="270"
+                                Background="#FFC8E6C9" BorderBrush="#FFA5D6A7" Foreground="#FF1B5E20"
+                                BorderThickness="3,3,3,3" Margin="5,10,5,10" Click="FuelInfoButton_OnClick" />
+
+                        <Button x:Name="ShiftButton" Content="Смена" Height="40" Width="270"
+                                Background="#FFC8E6C9" BorderBrush="#FFA5D6A7" Foreground="#FF1B5E20"
+                                BorderThickness="3,3,3,3" Margin="5,10,5,10" Click="ShiftButton_OnClick" />
+                    </StackPanel>
+
+                </Grid>
+
+                <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Visible"
+                              ScrollViewer.HorizontalScrollBarVisibility="Disabled" Height="500" Width="800"
+                              Canvas.Left="10" Canvas.Top="90">
+
+                    <WrapPanel x:Name="NozzleList" />
+                </ScrollViewer>
+            </Canvas>
+        </Viewbox>
+        <Viewbox x:Name="MainMenuBorderViewBox" Grid.Row="0" Grid.Column="1" Margin="0,10,0,10"
+                 HorizontalAlignment="Right">
+            <Grid x:Name="MainMenuBorder" HorizontalAlignment="Center" Height="654" VerticalAlignment="Top" Width="432"
+                  Margin="10,10,0,10">
+                <Rectangle x:Name="BorderOfMainMenu" Fill="#FF1B5E20" RadiusX="10" RadiusY="10" Width="427"
+                           Height="655" Margin="-4,0,0,0">
+                    <Rectangle.DataContext>
+                        <ComponentModel:Win32Exception />
+                    </Rectangle.DataContext>
+
+                </Rectangle>
+                <StackPanel x:Name="MainMenu" Height="654" Width="427" HorizontalAlignment="Left"
+                            VerticalAlignment="Center">
+                    <Grid x:Name="FeeTypeMainMenu" Height="80" VerticalAlignment="Top" Margin="10,10,10,0"
+                          UseLayoutRounding="False" IsManipulationEnabled="True">
+                        <Rectangle Fill="#FFC8E6C9" RadiusX="10" RadiusY="10">
+                            <Rectangle.DataContext>
+                                <ComponentModel:Win32Exception />
+                            </Rectangle.DataContext>
+
+                        </Rectangle>
+                        <Path
+                            Data="M4.9999986,0 L402,0 C404.76141,1.5199184E-06 407,2.2385777 407,4.9999987 L407,22 0,22 0,4.9999987 C0,2.2385777 2.2385762,1.5199184E-06 4.9999986,0 z"
+                            Fill="#FF66BB6A" HorizontalAlignment="Center" Height="22" Stretch="Fill"
+                            VerticalAlignment="Top" Width="407" />
+                        <Label Content="способ оплаты" VerticalAlignment="Top" HorizontalContentAlignment="Center"
+                               Padding="0,0,0,0" Grid.IsSharedSizeScope="True" Background="{x:Null}"
+                               Foreground="#FFE8F5E9" />
+                        <ComboBox x:Name="PaymentTypeComboBox" Height="39" Margin="10,30,10,0" SelectedIndex="0"
+                                  FontSize="30" ItemsSource="{Binding PaymentTypeNames}"
+                                  VerticalAlignment="Top" Foreground="#FF1B5E20" FontStretch="SemiCondensed">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </Grid>
+                    <Grid x:Name="FuelInfoMainMenu" Height="80" Margin="10,10,10,0">
+                        <Rectangle Fill="#FFC8E6C9" RadiusX="10" RadiusY="10" Margin="0,0,0,-2">
+                            <Rectangle.DataContext>
+                                <ComponentModel:Win32Exception />
+                            </Rectangle.DataContext>
+
+                        </Rectangle>
+                        <Path
+                            Data="M4.9999986,0 L402,0 C404.76141,1.5199184E-06 407,2.2385777 407,4.9999987 L407,22 0,22 0,4.9999987 C0,2.2385777 2.2385762,1.5199184E-06 4.9999986,0 z"
+                            Fill="#FF66BB6A" HorizontalAlignment="Center" Height="22" Stretch="Fill"
+                            VerticalAlignment="Top" Width="407" />
+                        <Label Content="топливо" VerticalAlignment="Top" HorizontalContentAlignment="Center"
+                               Padding="0,0,0,0" Grid.IsSharedSizeScope="True" Background="{x:Null}"
+                               Foreground="#FFE8F5E9" />
+                        <TextBlock x:Name="PickedNozzle"
+                                   TextAlignment="Left" Height="38" VerticalAlignment="Bottom"
+                                   Width="147" FontSize="30" HorizontalAlignment="Left" Margin="15,0,0,18"
+                                   Foreground="#FF1B5E20" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                   ScrollViewer.VerticalScrollBarVisibility="Auto" Padding="0"
+                                   FontStretch="SemiCondensed" >
+                            <TextBlock.Text>
+                                <Binding Path="SelectedNozzlePostInstance.NozzlelId" StringFormat="ПОСТ {0}" />
+                            </TextBlock.Text>
+                        </TextBlock>
+                        <TextBlock x:Name="PickedNozzleFuel" TextAlignment="Left" Height="21"
+                                   Text="{Binding Path=SelectedNozzlePostInstance.SelectedFuelName}"
+                                   VerticalAlignment="Bottom" Width="187" FontSize="20" HorizontalAlignment="Left"
+                                   Foreground="#FF1B5E20" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                   ScrollViewer.VerticalScrollBarVisibility="Auto" Padding="0,0,0,0"
+                                   FontStretch="ExtraExpanded" Margin="15,0,0,5"  />
+                        <TextBlock x:Name="PickedNozzleSummaryPrice" TextAlignment="Right" Height="38"
+                                   VerticalAlignment="Bottom" Width="203" FontSize="30" HorizontalAlignment="Right"
+                                   Margin="0,0,15,9" Foreground="#FF1B5E20"
+                                   Text="{Binding Path=SelectedNozzlePostInstance.TextSummary}"
+                                   ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                   ScrollViewer.VerticalScrollBarVisibility="Auto" Padding="0,0,0,0"
+                                   FontStretch="SemiCondensed" />
+                    </Grid>
+                    <Grid x:Name="GoodsMainMenu" Height="300" Margin="10,10,10,0" VerticalAlignment="Top"
+                          IsHitTestVisible="{Binding IsWindowFree}">
+                        <Rectangle Fill="#FFC8E6C9" RadiusX="10" RadiusY="10" Margin="0,0,0,-5">
+                            <Rectangle.DataContext>
+                                <ComponentModel:Win32Exception />
+                            </Rectangle.DataContext>
+
+                        </Rectangle>
+                        <Path
+                            Data="M4.9999986,0 L402,0 C404.76141,1.5199184E-06 407,2.2385777 407,4.9999987 L407,22 0,22 0,4.9999987 C0,2.2385777 2.2385762,1.5199184E-06 4.9999986,0 z"
+                            Fill="#FF66BB6A" HorizontalAlignment="Center" Height="22" Stretch="Fill"
+                            VerticalAlignment="Top" Width="407" />
+                        <Label Content="товары" VerticalAlignment="Top" HorizontalContentAlignment="Center"
+                               Padding="0,0,0,0" Grid.IsSharedSizeScope="True" Background="{x:Null}"
+                               Foreground="#FFE8F5E9" />
+                        <Path Data="M240.18433,162.65637 L72.960022,162.65637" HorizontalAlignment="Left" Height="1"
+                              Margin="10,0,0,40" Stroke="#FF1B5E20" Stretch="Fill" VerticalAlignment="Bottom"
+                              Width="387" />
+                        <TextBlock x:Name="GoodsSummaryTextBlock" TextAlignment="Right" Height="38"
+                                   VerticalAlignment="Bottom" Width="203" FontSize="30" HorizontalAlignment="Right"
+                                   Margin="0,0,15,-2" Foreground="#FF1B5E20"
+                                   ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                   ScrollViewer.VerticalScrollBarVisibility="Auto" Padding="0,0,0,0"
+                                   FontStretch="SemiCondensed" Text="{Binding Path=TextGoodsSummary}" />
+                        <Button x:Name="AddGoodsButton" Content="добавить товар" HorizontalAlignment="Left" Height="30"
+                                Margin="10,0,0,3" VerticalAlignment="Bottom" Width="160" Background="#FFA5D6A7"
+                                BorderBrush="#FF388E3C" Foreground="#FF1B5E20" BorderThickness="0,0,0,0"
+                                Click="AddGoodsButton_OnClick" />
+                        <DataGrid RowHeaderWidth="0" x:Name="GoodsMainMenuGrid" Margin="10,33,10,51"
+                                  Background="#FFC8E6C9" ItemsSource="{Binding ReceiptItems}"
+                                  BorderBrush="#FF66BB6A" Foreground="#FF1B5E20" Loaded="grid_Loaded"
+                                  GridLinesVisibility="None" IsReadOnly="True" MaxColumnWidth="250">
+                           
+                            <DataGrid.ColumnHeaderStyle>
+                                <Style TargetType="{x:Type DataGridColumnHeader}">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </Style>
+                            </DataGrid.ColumnHeaderStyle>
+                            <DataGrid.CellStyle>
+                                <Style TargetType="{x:Type DataGridCell}">
+                                    <Setter Property="Background" Value="#C8E6C9" />
+                                    <Setter Property="BorderBrush" Value="#C8E6C9" />
+                                    <Setter Property="Foreground" Value="#FF1B5E20" />
+                                </Style>
+                            </DataGrid.CellStyle>
+                            <DataGrid.RowStyle>
+                                <Style TargetType="{x:Type DataGridRow}">
+                                    <Setter Property="Background" Value="#C8E6C9" />
+                                    <Setter Property="BorderBrush" Value="#C8E6C9" />
+                                    <Setter Property="Foreground" Value="#FF1B5E20" />
+                                </Style>
+                            </DataGrid.RowStyle>
+                        </DataGrid>
+                    </Grid>
+                    <Grid x:Name="TotalInfoMainMenu" Height="145" VerticalAlignment="Top" Margin="10,10,10,0">
+                        <Rectangle Fill="#FFC8E6C9" RadiusX="10" RadiusY="10">
+                            <Rectangle.DataContext>
+                                <ComponentModel:Win32Exception />
+                            </Rectangle.DataContext>
+
+                        </Rectangle>
+                        <Path
+                            Data="M4.9999986,0 L402,0 C404.76141,1.5199184E-06 407,2.2385777 407,4.9999987 L407,22 0,22 0,4.9999987 C0,2.2385777 2.2385762,1.5199184E-06 4.9999986,0 z"
+                            Fill="#FF66BB6A" HorizontalAlignment="Center" Height="22" Stretch="Fill"
+                            VerticalAlignment="Top" Width="407" />
+                        <Label Content="итог" VerticalAlignment="Top" HorizontalContentAlignment="Center"
+                               Padding="0,0,0,0" Grid.IsSharedSizeScope="True" Background="{x:Null}"
+                               Foreground="#FFE8F5E9" />
+                        <TextBlock Text="Внесено:" Foreground="#FF1B5E20" TextAlignment="Right" Padding="0,5,0,0"
+                                   Margin="-29,0,0,48" FontSize="20" Width="143" Height="26" HorizontalAlignment="Left"
+                                   VerticalAlignment="Bottom" FontStretch="SemiCondensed" />
+                        <TextBlock Foreground="#FF1B5E20" TextAlignment="Right" Padding="0,5,0,0" Margin="-29,0,0,13"
+                                   FontSize="20" Width="143" Height="27" HorizontalAlignment="Left"
+                                   VerticalAlignment="Bottom" FontStretch="SemiCondensed">
+                            <Run Language="ru-ru" Text="Сдача:" />
+                        </TextBlock>
+                        <TextBlock Foreground="#FF1B5E20" TextAlignment="Right" Padding="0,5,0,0" Margin="20,0,0,79"
+                                   FontSize="30" Width="90" Height="40" HorizontalAlignment="Left"
+                                   VerticalAlignment="Bottom">
+                            <Run Text="В" /><Run Language="ru-ru" Text="сего" /><Run Text=":" />
+                        </TextBlock>
+                        <TextBox x:Name="TotalAmountInfo" HorizontalAlignment="Left" Height="40" Margin="120,0,0,75"
+                                 Text="{Binding Path=TotalCostText, Mode=OneWay}" Width="270" Foreground="#FF1B5E20"
+                                 Background="#FFC8E6C9"
+                                 BorderBrush="#FFA5D6A7" SelectionBrush="#FF2E7D32" SelectionTextBrush="#FFC8E6C9"
+                                 VerticalAlignment="Bottom" FontSize="30" TextWrapping="WrapWithOverflow"
+                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch"
+                                 IsReadOnly="True"
+                                 VerticalScrollBarVisibility="Disabled" BorderThickness="3,3,3,3" MaxLength="4"
+                                 Focusable="False" />
+                        <TextBox x:Name="DepositedCash" HorizontalAlignment="Left" Height="30" Margin="121,0,0,41"
+                                 Width="134" Text="{Binding Path=amountGiven,Mode=OneWayToSource}" Foreground="#FF1B5E20" Background="#FFA5D6A7" BorderBrush="#FFA5D6A7"
+                                 SelectionBrush="#FF2E7D32" SelectionTextBrush="#FFC8E6C9" VerticalAlignment="Bottom"
+                                 FontSize="20" TextWrapping="WrapWithOverflow" HorizontalContentAlignment="Center"
+                                 VerticalContentAlignment="Stretch" VerticalScrollBarVisibility="Disabled"
+                                 BorderThickness="3,3,3,3" MaxLength="4" Focusable="True" TextChanged="DepositedCash_TextChanged" />
+                        <TextBox x:Name="ChangeCash" HorizontalAlignment="Left" Height="30" Margin="121,0,0,7"
+                                 Width="134" Foreground="#FF1B5E20" Background="#FFA5D6A7" BorderBrush="#FFA5D6A7"
+                                 SelectionBrush="#FF2E7D32" SelectionTextBrush="#FFC8E6C9" VerticalAlignment="Bottom"
+                                 FontSize="20" TextWrapping="WrapWithOverflow" HorizontalContentAlignment="Center"
+                                 VerticalContentAlignment="Stretch" VerticalScrollBarVisibility="Disabled"
+                                 BorderThickness="3,3,3,3" MaxLength="4" Focusable="False" />
+                        <Button x:Name="FinishPaymentButton"
+                                Content="{Binding FinishPaymentType, Converter={StaticResource FinishPaymentConverter}}"
+                                HorizontalAlignment="Right" Height="63"
+                                Margin="0,0,17,7" VerticalAlignment="Bottom" Width="130" Background="#FF66BB6A"
+                                BorderBrush="#FF388E3C" Foreground="#FFE8F5E9" BorderThickness="0,0,0,0" FontSize="28"
+                                VerticalContentAlignment="Center" RenderTransformOrigin="0.5,0.5"
+                                Click="FinishPaymentButton_OnClick"
+                                IsHitTestVisible="{Binding IsPaymentReady}"
+                                />
+                        <Popup x:Name="TanksNotEnough" IsOpen="False" StaysOpen="False" AllowsTransparency="True"
+                           PopupAnimation="Fade" Placement="Mouse">
+                            <Grid Margin="20">
+                                <Border Background="#FF81C784" Padding="10" CornerRadius="10">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="black" ShadowDepth="2" BlurRadius="15" />
+                                    </Border.Effect>
+                                    <TextBlock Text="Недостаточно топлива"
+                                           FontSize="20" Foreground="#FF388E3C" />
+                                </Border>
+                            </Grid>
+                        </Popup>
+                        <Popup x:Name="FoodsNotEnough" IsOpen="False" StaysOpen="False" AllowsTransparency="True"
+                           PopupAnimation="Fade" Placement="Mouse">
+                            <Grid Margin="20">
+                                <Border Background="#FF81C784" Padding="10" CornerRadius="10">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="black" ShadowDepth="2" BlurRadius="15" />
+                                    </Border.Effect>
+                                    <TextBlock Text="Недостаточно товаров"
+                                           FontSize="20" Foreground="#FF388E3C" />
+                                </Border>
+                            </Grid>
+                        </Popup>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </Viewbox>
+    </Grid>
+</Window>
